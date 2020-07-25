@@ -2,7 +2,7 @@
 
 Here I do a bit more of a deep dive into what the style really means.  There are many layers in VGG, so here I will take the layers individually, and match the style onto a "content image" of noise.  I will also match the single layer onto the content image of my dog.  I will consider two images, "Water Lillies (n>>1)" by Monet and "Tondal's Vision" by (a follower of) Hieronymus Bosch.
 
-<p align="center"><img src="Images/Tondal_Resize.png" alt="Tondal's Vision" width="300"/></p><p align="center"><img src="Images/Monet_Resize.png" alt="Water Lillies" width="300"/></p>
+<p align="center"><img src="Images/Monet_Resize.png" alt="Water Lillies" width="300"/><img src="Images/Tondal_Resize.png" alt="Tondal's Vision" width="300"/></p>
 
 
 
