@@ -2,7 +2,7 @@
 
 ## Single style
 
-Interested in understanding neural style transfer, I set out to create one.  This is adapted from the tf implementation.  It is pretty awesome.  I definitely want to experiment with it some more, but here are results.  Obviously, I am going to use a photo of my beautiful dog, Bacchus.
+Interested in understanding neural style transfer, I set out to create one.  This is adapted from the tf implementation.  Obviously, I am going to use a photo of my beautiful dog, Bacchus.
 
 <p align="center"><img src="ParentImages/Bacchus.jpg" alt="Bacchus" width="400"/></p>
 
@@ -13,9 +13,9 @@ The results are pretty great...
 <img src="Images/Bacchus_Limbo.jpg" alt="Bosch Follower's Christ in Limbo" width="230"/><img src="Images/Bacchus_Tondal.jpg" alt="Bosch's Tondal's Vision" width="230"/><img src="Images/Bacchus_Triumph.jpg" alt="Bruegel's Triumph of Death" width="230"/>  
 
 
-## What is Neural Style Transfer
+## What is Neural Style Transfer?
 
-The baisc idea behind neural style transfer is to take an image, and transfer the artistic style of an artist onto it.  This can be done by the following basic process:  
+The basic idea behind neural style transfer is to take an image, and transfer the artistic style of an artist onto it.  This can be done by the following basic process:  
 1) Take a CNN trained for multi-purpose image examination (such as VGG19, used here)  
 2) Extracting features from some of the layers of the network for both a "content" image and "style" image  
 3) Creating a new image, "combo," that minimizes the loss from the content's deviation from "content" and the loss from the style's deviation from "style"  
@@ -42,3 +42,39 @@ Instead of transfering one style, we could try to transfer two: a fine style, wh
 <img src="ParentImages/Babel_Bruegel.jpg" alt="Tower of Babel" width="200"  height="150"/><img src="DualImages/Bacchus_Babel_Comp.jpg" alt="Fine: Tower of Babel; Coarse: Composition VII" width="200"/><img src="DualImages/Bacchus_Babel_Tondal.jpg" alt="Fine: Tower of Babel; Coarse: Tondal's Vision" width="200"/><img src="DualImages/Bacchus_Babel_Paris.jpg" alt="Fine: Tower of Babel; Coarse: Bridges of Paris" width="200"/>  
 <img src="ParentImages/Water_Lily_Pond_Monet.jpg" alt="The Water-lily Pond" width="200"  height="150"/><img src="DualImages/Bacchus_Monet_Comp.jpg" alt="Fine: The Water-lily Pond; Coarse: Composition VII" width="200"/><img src="DualImages/Bacchus_Monet_Tondal.jpg" alt="Fine: The Water-lily Pond; Coarse: Tondal's Vision" width="200"/><img src="DualImages/Bacchus_Monet_Paris.jpg" alt="Fine: The Water-lily Pond; Coarse: Bridges of Paris" width="200"/>  
 <img src="ParentImages/The_Triumph_of_Death_Bruegel.jpg" alt="The Triumph of Death" width="200"  height="150"/><img src="DualImages/Bacchus_Triumph_Comp.jpg" alt="Fine: Triumph of Death; Coarse: Composition VII" width="200"/><img src="DualImages/Bacchus_Triumph_Tondal.jpg" alt="Fine: Triumph of Death; Coarse: Tondal's Vision" width="200"/><img src="DualImages/Bacchus_Triumph_Paris.jpg" alt="Fine: Triumph of Death; Coarse: Bridges of Paris" width="200"/>  
+
+Note how the colors are textures are mostly preserved from the images on the left (fine style), while larger features (music symbols, creepy faces, sharp angles) are largely preserved from the top row.  All look very Bacchus, even though the content (his image) is only the initial condition.  We could also use noise as the initial condition and apply fine and coarse features:  
+
+<p align="center"><img src="DualImages/Monet_Comp.jpg" alt="Fine: The Water-lily Pond; Coarse: Composition VII" width="400"/></p>
+
+# Triple Neural Style Transfer
+
+As can be observed from the Exploration folder, there is a lot of difference between the 1st, 3rd, and 5th block of the network.  We could instead 
+try to transfer three styles to the image - roughly as colors, small features, and large features (A, B, C respectively). This is in TriNST.ipynb. These style transfers are definitely rather tempermental - if the adjacent style is too discordant, there tend to be a lot of artifacts produced.  Turning up the smoothing (v_w) can help a lot, but it isn't always enough.    
+
+<img src="TriImages/Bacchus_Paris_Window_Limbo.jpg" alt="Colors: Bridges of Paris; Fine: Window on the City; Coarse: Christ in Limbo" width="200"/><img src="TriImages/Bacchus_Paris_Window_Metz.jpg" alt="Colors: Bridges of Paris; Fine: Window on the City; Coarse: Two Nudes" width="200"/><img src="TriImages/Bacchus_Metz_Paris_Window.jpg" alt="Colors: Two Nudes; Fine: Bridges of Paris; Coarse: Window on the City" width="200"/><img src="TriImages/Bacchus_Turner_Limbo_Comp.jpg" alt="Colors: Wrecker's Coast of Northumberland; Fine: Christ in Limbo; Coarse: Composition VII" width="200"/><img src="TriImages/Bacchus_Limbo_Triumph_Comp.jpg" alt="Colors: Christ in Limbo; Fine: Triumph of Death; Coarse: Composition VII" width="200"/><img src="TriImages/Bacchus_Window_Triumph_Comp.jpg" alt="Colors: Window on the City; Fine: Triumph of Death; Coarse: Composition VII" width="200"/><img src="TriImages/Bacchus_Paris_Babel_Limbo.jpg" alt="Colors: Bridges of Paris; Fine: Tower of Babel; Coarse: Christ in Limbo" width="200"/><img src="TriImages/Bacchus_Triumph_Tondal_Limbo.jpg" alt="Colors: Triumph of Deaths; Fine: Tondal's Vision; Coarse: Christ in Limbo" width="200"/>  
+
+## More control over dual transfer with triple transfer
+
+In addition to making the transfer of three styles possible, there is an improvement on the dual transfer, for instance, having one image tranfer A & B, and the second transfer C, or one do A, and the other do B & C.   Below from left to right, we have Water-lily Pond + Composition VII using 1) the Dual method; 2) A & B - Water-lily, C - Composition; 3) A - Water-lily, B & C - Composition.  It is clear how much difference these middle layers can make.
+
+<img src="DualImages/Bacchus_Monet_Comp.jpg" alt="Fine: The Water-lily Pond; Coarse: Composition VII" width="250"/><img src="TriImages/Bacchus_Monet_Monet_Comp.jpg" alt="Colors: The Water-lily Pond; Fine: The Water-lily Pond; Coarse: Composition VII" width="250"/><img src="TriImages/Bacchus_Monet_Comp_Comp.jpg" alt="Colors: The Water-lily Pond; Fine: Composition VII; Coarse: Composition VII" width="250"/>
+
+## More control over single transfer with triple transfer
+
+Similarly, we don't have to tranfer all levels.  By setting some weights to 0, we can just transfer some of the pieces.  Here is transfering just (left to right) 1) A & B; 2) A & C; 3) B & C from Albert Gleizes's Bridges of Paris.     
+
+<img src="TriImages/Bacchus_Paris_Paris_0.jpg" alt="Colors: Bridges of Paris; Fine: Bridges of Paris; Coarse: None" width="250"/><img src="TriImages/Bacchus_Paris_0_Paris.jpg" alt="Colors: Bridges of Paris; Fine: None; Coarse: Bridges of Paris" width="250"/><img src="TriImages/Bacchus_0_Paris_Paris.jpg" alt="Colors: None; Fine: Bridges of Paris; Coarse: Bridges of Paris" width="250"/>  
+
+## More subtle influence with triple transfer
+
+We can also use the content image as a choice for style image in order to preserve more features.  For example here is Tower of Babel as content, with Monet's Blue Water Lillies applied in levels A & B, while C is again Tower of Babel Style:  
+
+<p align="center"><img src="TriImages/Babel_Monet2_Monet2_Babel.jpg" alt="Colors: Blue Lillies; Fine: Blue Lillies; Coarse: Tower of Babel" width="400"/></p>
+
+we can choose multiple ways to apply this, as an example we will show Tower of Babel as content, Bridges of Paris / Babel as style - in order 1) ABC - Babel (no Paris applied, only smoothing); 2) AB - Babel, C - Paris; 3) AC - Babel, B - Paris; 4) BC - Babel, A - Paris; 5) A - Babel, BC - Paris; 6) B - Babel, AC - Paris; 7) C - Babel, AB - Paris; 8) ABC - Paris  
+
+<img src="TriImages/Babel_Babel_Babel_Babel.jpg" alt="Colors: Tower of Babel; Fine: Tower of Babel; Coarse: Tower of Babel" width="200"/><img src="TriImages/Babel_Babel_Babel_Paris.jpg" alt="Colors: Tower of Babel; Fine: Tower of Babel; Coarse: Bridges of Paris" width="200"/><img src="TriImages/Babel_Babel_Paris_Babel.jpg" alt="Colors: Tower of Babel; Fine: Bridges of Paris; Coarse: Tower of Babel" width="200"/><img src="TriImages/Babel_Paris_Babel_Babel.jpg" alt="Colors: Bridges of Paris; Fine: Tower of Babel; Coarse: Tower of Babel" width="200"/><img src="TriImages/Babel_Babel_Paris_Paris.jpg" alt="Colors: Tower of Babel; Fine: Bridges of Paris; Coarse: Bridges of Paris" width="200"/><img src="TriImages/Babel_Paris_Babel_Paris.jpg" alt="Colors: Bridges of Paris; Fine: Tower of Babel; Coarse: Bridges of Paris" width="200"/><img src="TriImages/Babel_Paris_Paris_Babel.jpg" alt="Colors: Bridges of Paris; Fine: Bridges of Paris; Coarse: Tower of Babel" width="200"/><img src="TriImages/Babel_Paris_Paris_Paris.jpg" alt="Colors: Bridges of Paris; Fine: Bridges of Paris; Coarse: Bridges of Paris" width="200"/>   
+
+Notice how A is really governing the color scheme (1235 vs 4678); B is capturing small details, e.g., tower windows, foreground (1246 vs 3578); and C is getting the largest features, e.g., shape of the tower, surrounding hills (1347 vs 2568).
+
