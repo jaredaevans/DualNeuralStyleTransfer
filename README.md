@@ -24,14 +24,14 @@ The results are pretty great...
 
 ## What is Neural Style Transfer?
 
-The basic idea behind neural style transfer is to take an image, and transfer the artistic style of an artist onto it.  This can be done by the following basic process:  
+The basic idea behind neural style transfer is to take an image and transfer the artistic style of another image onto it.  This can be done by the following basic process:  
 1) Take a CNN (convolutional neural network) trained for multi-purpose image examination (such as VGG19, used here)  
 2) Extracting features from some of the layers of the network for both a "content" image and "style" image  
 3) Creating a new image, "combo," that minimizes the loss from the content's deviation from "content" and the loss from the style's deviation from "style"  
 
 In a paper by Gatys et al (https://arxiv.org/pdf/1508.06576.pdf), the authors construct this method by using two loss functions:  
 1) Content loss:  The "pixel" distance between the "combo" and "content" on a deep layer of the network.   
-2) Style loss:  The difference in the Gram matrix of the "combo" and "style" across several layers throughout the network.  In essence the Gram matrix takes a pixel image h x w x n_f, where h and w are the height and width of the image, and converts it into a n_f x n_f matrix that is a measure of how many and by how much each of the layer's features have been represented in that image.  The difference between the gram matrix then tracks how much these features matter.  Importantly, this doesn't care so much *where* the features are located, only that they are there.  This is pulled over multiple layers of the CNN.   
+2) Style loss:  The difference in the Gram matrix of the "combo" and "style" across several layers throughout the network.  In essence the Gram matrix takes a pixel image (h x w x n_f), where h and w are the height and width of the image, and n_f is the number of filters (i.e. features), and converts it into a n_f x n_f matrix that is a measure of how many and by how much each of the layer's features have been represented in that image.  The difference between the gram matrix of the style image and combo image tracks how much these features have been captured.  Importantly, this doesn't care so much *where* the features are located, only that they are present.  This is polled over multiple layers of the CNN.   
 
 
 ## What is different about my implementation?
