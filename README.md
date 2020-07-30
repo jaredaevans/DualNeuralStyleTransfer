@@ -107,4 +107,4 @@ Neural style transfer can be customized quite a bit.  The transfer of styles fro
 
 # Quick tips on using
 
-The jupyter notebooks should larger work out of box, properly linked.   With a GPU, this should take about a minute to run over an image (a bit less time for single transfer).  Without a GPU - you are in for a long haul (e.g. half an hour).  If you want to experiment, I'd encourage you to use the GPUs on Google colab or kaggle.
+The jupyter notebooks should just work out of box, once the requisite files are properly linked.   With a GPU, this should take about a minute to run over an image (a bit less time for single transfer).  Without a GPU - you are in for a long haul (e.g. half an hour).  If you want to experiment and don't have your own, I'd encourage you to use the GPUs on Google colab or kaggle.
